@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Codewars</title>
+</head>
+<body>
+    <h1>Codewars</h1>
+    {% for user in users %}
+        <section>
+            <p>{{ user }}</p>
+            <input type="submit" value="Показать решение">
+            <hr>
+        </section>
+    {% endfor %}
+</body>
+</html>
