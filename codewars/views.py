@@ -11,3 +11,7 @@ def profile(request):
 
 def new_post(request):
     return render(request, 'newpost.html')
+
+
+def registration(request):
+    return render(request, 'registration.html')
