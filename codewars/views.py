@@ -1,4 +1,7 @@
+from django.http import HttpResponseRedirect
 from django.shortcuts import render
+from .forms import NameForm
+from .models import User
 
 
 def index(request):
@@ -14,4 +17,15 @@ def new_post(request):
 
 
 def registration(request):
-    return render(request, 'registration.html')
+    if request.method == 'POST':
+
+        form = NameForm(request.POST)
+        if form.is_valid():
+            name = form.cleaned_data.get("username")
+            User.objects.create(name=name, icon="")
+            return HttpResponseRedirect('')
+
+    else:
+        form = NameForm()
+
+    return render(request, 'registration.html', {'form': form})
