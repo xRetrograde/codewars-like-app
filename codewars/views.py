@@ -1,11 +1,11 @@
 from django.http import HttpResponseRedirect
 from django.shortcuts import render
 from .forms import RegistrationForm
-from .models import User
+from .models import User, Post
 
 
 def index(request):
-    return render(request, 'index.html', {'users': ['Van', 'Maks', 'Nikita']})
+    return render(request, 'index.html', {'posts': Post.objects.all()})
 
 
 def profile(request):
