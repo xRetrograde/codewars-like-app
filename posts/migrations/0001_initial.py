@@ -25,7 +25,7 @@ class Migration(migrations.Migration):
                 ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
                 ('Posts_name', models.TextField()),
                 ('Kata_link', models.TextField()),
-                ('Post_author', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='codewars.users')),
+                ('Post_author', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='posts.users')),
             ],
         ),
     ]
