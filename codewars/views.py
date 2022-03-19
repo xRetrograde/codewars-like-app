@@ -9,7 +9,8 @@ def index(request):
 
 
 def profile(request):
-    return render(request, 'profile.html')
+    return render(request, 'profile.html', {'username': User.objects.get(pk=1),
+                                            'katas': ['lambda x: x * 2', 'print("hello world")']})
 
 
 def new_post(request):
