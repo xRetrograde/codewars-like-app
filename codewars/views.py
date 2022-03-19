@@ -9,8 +9,8 @@ def index(request):
 
 
 def profile(request):
-    return render(request, 'profile.html', {'username': User.objects.get(pk=1),
-                                            'katas': ['lambda x: x * 2', 'print("hello world")']})
+    return render(request, 'profile.html', {'username': User.objects.first(),
+                                            'posts': ['lambda x: x * 2', 'print("hello world")']})
 
 
 def new_post(request):
@@ -24,7 +24,7 @@ def registration(request):
         if form.is_valid():
             name = form.cleaned_data.get("username")
             password = form.cleaned_data.get("password")
-            User.objects.create(name=name, password=password, icon="")
+            User.objects.create(name=name, password=password)
             return HttpResponseRedirect('')
 
     else:

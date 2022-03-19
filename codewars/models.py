@@ -3,8 +3,7 @@ from django.db import models
 
 class User(models.Model):
     name = models.CharField(max_length=30)
-    icon = models.CharField(max_length=500)
-    password = models.CharField(max_length=30, null=False)
+    password = models.CharField(max_length=30, default='1234')
 
 
 class Post(models.Model):
