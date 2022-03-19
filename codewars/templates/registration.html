@@ -1,23 +1,18 @@
-<!DOCTYPE html>
-<html lang="ru">
-  <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Регистрация</title>
-  </head>
-  <body>
-    <section class="container">
-      <h1>Регистрация</h1>
-      <hr />
+{% extends 'base.html' %}
 
-      <form action="/registration" method="post">
+{% block title %} Регистрация {% endblock %}
 
-        {% csrf_token %}
-        {{ form.as_p }}
+{% block content %}
+<section class="container">
+  <h1>Регистрация</h1>
+  <hr />
 
-        <input type="submit" value="Зарегистрироваться" />
-      </form>
-    </section>
-  </body>
-</html>
+  <form action="/registration" method="post">
+
+    {% csrf_token %}
+    {{ form.as_p }}
+
+    <input type="submit" value="Зарегистрироваться" />
+  </form>
+</section>
+{% endblock %}
