@@ -4,9 +4,9 @@
 
 {% block content %}
 <h1>Главная страница</h1>
-    {% for user in users %}
+    {% for post in posts %}
         <section>
-            <p>{{ user }}</p>
+            <p>{{ post.name }} - {{ post.author.name }} ({{ post.link }})</p>
             <input type="submit" value="Показать решение">
             <hr>
         </section>
