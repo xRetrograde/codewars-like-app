@@ -4,6 +4,7 @@ from django.db import models
 class User(models.Model):
     name = models.CharField(max_length=30)
     icon = models.CharField(max_length=500)
+    password = models.CharField(max_length=30, null=False)
 
 
 class Post(models.Model):
