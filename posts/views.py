@@ -1,6 +1,6 @@
 from django.contrib.auth.hashers import check_password
 from django.shortcuts import render, redirect, get_object_or_404
-from .forms import RegistrationForm, LoginForm
+from .forms import RegistrationForm, LoginForm, AddPost
 from .models import User, Post
 
 
@@ -54,10 +54,14 @@ def login(request):
                 request.session['name'] = user.name
                 request.session['email'] = user.email
                 request.session['password'] = form.cleaned_data.get('password')
-
-                print(request.session['name'], request.session['password'])
-
                 return redirect('/profile')
 
     form = LoginForm()
     return render(request, 'login.html', {'form': form})
+
+
+def NewPost(request):
+    if request.method == 'POST':
+        form = AddPost(request.POST)
+    form = AddPost()
+    return render(request, 'newpost.html', {'form': form})
