@@ -1,9 +1,7 @@
 from django.contrib.auth.hashers import check_password
-from django.http import HttpResponseRedirect, HttpResponse
-from django.shortcuts import render
+from django.shortcuts import render, redirect, get_object_or_404
 from .forms import RegistrationForm, LoginForm
 from .models import User, Post
-
 
 
 def index(request):
@@ -20,6 +18,9 @@ def new_post(request):
 
 
 def registration(request):
+    if request.session.get('email'):
+        return redirect('/profile')
+
     if request.method == 'POST':
 
         form = RegistrationForm(request.POST)
@@ -27,7 +28,12 @@ def registration(request):
             new_user = form.save(commit=False)
             new_user.set_password(request.POST["password"])
             new_user.save()
-            return HttpResponseRedirect('')
+
+            request.session['name'] = form.cleaned_data.get('name')
+            request.session['email'] = form.cleaned_data.get('email')
+            request.session['password'] = form.cleaned_data.get('password')
+
+            return redirect('/profile')
 
     form = RegistrationForm()
 
@@ -35,15 +41,23 @@ def registration(request):
 
 
 def login(request):
+    if request.session.get('email'):
+        return redirect('/profile')
+
     if request.method == 'POST':
         form = LoginForm(request.POST)
 
         if form.is_valid():
 
-            user = User.objects.get(email=form.cleaned_data.get("email"))
+            user = get_object_or_404(User, email=form.cleaned_data.get('email'))
             if check_password(request.POST["password"], user.password):
-                return HttpResponse("Ну проходи")
-            else:
-                return HttpResponse("уходи о больше никогда не приходи")
+                request.session['name'] = user.name
+                request.session['email'] = user.email
+                request.session['password'] = form.cleaned_data.get('password')
+
+                print(request.session['name'], request.session['password'])
+
+                return redirect('/profile')
+
     form = LoginForm()
     return render(request, 'login.html', {'form': form})
