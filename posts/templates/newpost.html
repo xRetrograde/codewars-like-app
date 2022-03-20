@@ -4,4 +4,9 @@
 
 {% block content %}
 <h1>Добавить новый пост</h1>
+
+    <section>
+    {% csrf_token %}
+    {{ form.as_p }}
+    </section>
 {% endblock %}
