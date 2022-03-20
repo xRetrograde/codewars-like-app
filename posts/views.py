@@ -1,7 +1,9 @@
-from django.http import HttpResponseRedirect
+from django.contrib.auth.hashers import check_password
+from django.http import HttpResponseRedirect, HttpResponse
 from django.shortcuts import render
-from .forms import RegistrationForm
+from .forms import RegistrationForm, LoginForm
 from .models import User, Post
+
 
 
 def index(request):
@@ -9,7 +11,7 @@ def index(request):
 
 
 def profile(request):
-    return render(request, 'profile.html', {'username': User.objects.first(),
+    return render(request, 'profile.html', {'username': request.session.get('name'),
                                             'posts': ['lambda x: x * 2', 'print("hello world")']})
 
 
@@ -30,3 +32,18 @@ def registration(request):
     form = RegistrationForm()
 
     return render(request, 'registration.html', {'form': form})
+
+
+def login(request):
+    if request.method == 'POST':
+        form = LoginForm(request.POST)
+
+        if form.is_valid():
+
+            user = User.objects.get(email=form.cleaned_data.get("email"))
+            if check_password(request.POST["password"], user.password):
+                return HttpResponse("Ну проходи")
+            else:
+                return HttpResponse("уходи о больше никогда не приходи")
+    form = LoginForm()
+    return render(request, 'login.html', {'form': form})
