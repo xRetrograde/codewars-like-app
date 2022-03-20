@@ -15,10 +15,10 @@ class User(models.Model):
 
 
 class Post(models.Model):
-    name = models.CharField(max_length=30)
-    complexity = models.CharField(max_length=3, null=False)
-    language = models.CharField(max_length=30, null=False)
-    link = models.CharField(max_length=300)
+    name = models.CharField('Название', max_length=30)
+    complexity = models.CharField('Сложность', max_length=3, null=False)
+    language = models.CharField('Язык', max_length=30, null=False)
+    link = models.CharField('Ссылка', max_length=300)
     author = models.ForeignKey(User, on_delete=models.CASCADE)
     solution = models.TextField(default='Ваше решение')
 
