@@ -3,8 +3,8 @@ from django.db import models
 
 
 class User(models.Model):
-    name = models.CharField(max_length=50, null=False)
-    email = models.EmailField(null=False, unique=True)
+    name = models.CharField("имя", max_length=50, null=False)
+    email = models.EmailField("эллектронная почта", null=False, unique=True)
     password = models.CharField(max_length=50, null=False)
 
     def set_password(self, password):
