@@ -1,5 +1,4 @@
-from django.http import HttpResponseRedirect
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from .forms import RegistrationForm
 from .models import User, Post
 
@@ -9,7 +8,8 @@ def index(request):
 
 
 def profile(request):
-    return render(request, 'profile.html', {'username': User.objects.first(),
+    print(request.session.get('name'))
+    return render(request, 'profile.html', {'username': 'name',
                                             'posts': ['lambda x: x * 2', 'print("hello world")']})
 
 
@@ -19,15 +19,13 @@ def new_post(request):
 
 def registration(request):
     if request.method == 'POST':
-
         form = RegistrationForm(request.POST)
         if form.is_valid():
             name = form.cleaned_data.get("username")
             password = form.cleaned_data.get("password")
             User.objects.create(name=name, password=password)
-            return HttpResponseRedirect('')
+            return redirect('/')
 
-    else:
-        form = RegistrationForm()
+    form = RegistrationForm()
 
     return render(request, 'registration.html', {'form': form})
