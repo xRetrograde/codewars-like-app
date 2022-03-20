@@ -1,5 +1,5 @@
-{% extends 'base.html' %} {% block title %}Войти{% endblock %} {% block content
-%}
+{% extends 'base.html' %} {% block title %}Войти{% endblock %}
+
 {% block content%}
 <section class="container">
   <h1>Вход в  аккаунт</h1>
@@ -10,6 +10,6 @@
     {{form.as_p}}
     <input type="submit" value="Войти" />
   </form>
-  <span>Нет аккаунта? <a href="#">Зарегистритуйтесь!</a></span>
+  <span>Нет аккаунта? <a href="/registration">Зарегистритуйтесь!</a></span>
 </section>
 {% endblock %}
