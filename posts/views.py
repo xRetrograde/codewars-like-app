@@ -14,7 +14,7 @@ def profile(request):
 
 
 def new_post(request):
-    return render(request, 'newpost.html')
+    return render(request, 'newpost.html', {'form': AddPost})
 
 
 def registration(request):
@@ -48,7 +48,6 @@ def login(request):
         form = LoginForm(request.POST)
 
         if form.is_valid():
-
             user = get_object_or_404(User, email=form.cleaned_data.get('email'))
             if check_password(request.POST["password"], user.password):
                 request.session['name'] = user.name
@@ -60,7 +59,14 @@ def login(request):
     return render(request, 'login.html', {'form': form})
 
 
-def NewPost(request):
+def logout(request):
+    for key in ['name', 'email', 'password']:
+        del request.session[key]
+
+    return redirect('/')
+
+
+def add_post(request):
     if request.method == 'POST':
         form = AddPost(request.POST)
     form = AddPost()
