@@ -9,18 +9,19 @@ class RegistrationForm(forms.ModelForm):
         model = User
         fields = ('name', 'email')
 
-    # email = forms.EmailField(label='Email')
-    # username = forms.CharField(label='Имя пользователя', max_length=50)
-    password = forms.CharField(label='Пароль', widget=forms.PasswordInput(), max_length=50)
+    password = forms.CharField(label='Пароль', widget=forms.PasswordInput(), max_length=20)
 
 
 class LoginForm(forms.Form):
     email = forms.EmailField()
-    password = forms.CharField(label='Пароль', widget=forms.PasswordInput(), max_length=50)
+    password = forms.CharField(label='Пароль', widget=forms.PasswordInput(), max_length=20)
 
 
 class AddPost(forms.ModelForm):
     class Meta:
         model = Post
-        fields = ('name', 'complexity', 'language', 'link')
-    solution = forms.CharField(widget=forms.Textarea, label="что-то")
+        fields = ('name', 'language')
+
+    difficulty = forms.IntegerField(max_value=8, label='Сложность')
+    link = forms.URLField(max_length=200, label='Ссылка')
+    solution = forms.CharField(widget=forms.Textarea, label="Что-то")
