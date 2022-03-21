@@ -125,5 +125,3 @@ STATIC_URL = 'static/'
 SESSION_ENGINE = "django.contrib.sessions.backends.signed_cookies"
 
 SESSION_COOKIE_HTTPONLY = True
-
-DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
