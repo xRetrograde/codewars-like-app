@@ -4,6 +4,7 @@
 
 {% block content %}
 <h1>Главная страница</h1>
+<hr>
     {% for post in posts %}
         <section>
             <p>{{ post.name }} - {{ post.author.name }} ({{ post.link }})</p>
