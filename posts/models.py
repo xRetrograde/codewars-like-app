@@ -15,12 +15,18 @@ class User(models.Model):
 
 
 class Post(models.Model):
-    name = models.CharField(max_length=20)
+    name = models.CharField('Название', max_length=20)
     difficulty = models.IntegerField(default=8)
-    language = models.CharField(max_length=15)
+    language = models.CharField('Язык', max_length=15)
     link = models.URLField(max_length=300)
-    author = models.ForeignKey(User, on_delete=models.CASCADE)
-    code = models.TextField(default='Ваше решение')
+    author = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
+    solution = models.TextField(default='Ваше решение')
 
     def __str__(self):
-        return self.name
+        return self.author
+
+    def set_fields(self, difficulty, link, solution, author):
+        self.difficulty = difficulty
+        self.link = link
+        self.solution = solution
+        self.author = author
