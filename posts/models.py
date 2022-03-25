@@ -3,9 +3,9 @@ from django.db import models
 
 
 class User(models.Model):
-    name = models.CharField("Имя", max_length=20, null=False)
-    email = models.EmailField("Электронная почта", null=False, unique=True)
-    password = models.CharField(max_length=20, null=False)
+    name = models.CharField('Имя', max_length=20)
+    email = models.EmailField('Почта', max_length=30, unique=True)
+    password = models.CharField(max_length=20)
 
     def set_password(self, password):
         self.password = make_password(password)
@@ -15,10 +15,10 @@ class User(models.Model):
 
 
 class Post(models.Model):
-    name = models.CharField('Имя', max_length=20)
-    difficulty = models.IntegerField('Сложность', default=8, null=False)
-    language = models.CharField('Язык', max_length=15, null=False)
-    link = models.URLField('Ссылка', max_length=300)
+    name = models.CharField(max_length=20)
+    difficulty = models.IntegerField(default=8)
+    language = models.CharField(max_length=15)
+    link = models.URLField(max_length=300)
     author = models.ForeignKey(User, on_delete=models.CASCADE)
     solution = models.TextField(default='Ваше решение')
 
