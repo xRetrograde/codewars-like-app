@@ -3,5 +3,12 @@
 {% block title %}Пост {{ post_id }}{% endblock %}
 
 {% block content %}
-
+    <h1>{{ post.name }}</h1>
+    <b>{{ post.author }}</b>
+    <hr>
+    <p>Сложность - {{ post.difficulty }} kyu. Язык - {{ post.language }}</p>
+    <p><a href="{{ post.link }}">Ссылка на кату</a></p>
+    <span>
+        {{ post.code }}
+    </span>
 {% endblock %}
