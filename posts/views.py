@@ -72,6 +72,16 @@ def logout(request):
 def add_post(request):
     if request.method == 'POST':
         form = AddPost(request.POST)
+        if form.is_valid():
+            email = request.session['email']
+            user = User.objects.get(email=email)
+            new_form = form.save(commit=False)
+            difficulty = form.cleaned_data.get('difficulty')
+            link = form.cleaned_data.get('link')
+            solution = form.cleaned_data.get('solution')
+            new_form.set_fields(difficulty, link, solution, user)
+            new_form.save()
+
     form = AddPost()
     return render(request, 'newpost.html', {'form': form})
 
