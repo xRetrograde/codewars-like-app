@@ -5,12 +5,15 @@ from .models import User, Post
 
 
 def index(request):
-    return render(request, 'index.html', {'posts': Post.objects.all()})
+    context = {'posts': Post.objects.all()}
+    return render(request, 'index.html', context)
 
 
 def profile(request):
-    return render(request, 'profile.html', {'username': request.session.get('name'),
-                                            'posts': ['lambda x: x * 2', 'print("hello world")']})
+    context = {'username': request.session.get('name'),
+               'posts': ['lambda x: x * 2', 'print("hello world")']}
+
+    return render(request, 'profile.html', context)
 
 
 def new_post(request):
@@ -71,3 +74,9 @@ def add_post(request):
         form = AddPost(request.POST)
     form = AddPost()
     return render(request, 'newpost.html', {'form': form})
+
+
+def post(request, post_id):
+    context = {'post_id': post_id,
+               'post': Post.objects.get(pk=post_id)}
+    return render(request, 'post.html', context)
