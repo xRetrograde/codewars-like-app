@@ -5,9 +5,13 @@
 {% block content %}
 <h1>Добавить новый пост</h1>
 
+
+
     <section>
+    <form action="" method="post">
     {% csrf_token %}
     {{ form.as_p }}
     <input type="submit" value="Отправить">
+    </form>
     </section>
 {% endblock %}
