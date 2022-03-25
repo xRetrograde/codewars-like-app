@@ -20,7 +20,7 @@ class Post(models.Model):
     language = models.CharField(max_length=15)
     link = models.URLField(max_length=300)
     author = models.ForeignKey(User, on_delete=models.CASCADE)
-    solution = models.TextField(default='Ваше решение')
+    code = models.TextField(default='Ваше решение')
 
     def __str__(self):
-        return self.author
+        return self.name
