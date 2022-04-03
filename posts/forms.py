@@ -24,4 +24,4 @@ class AddPost(forms.ModelForm):
 
     difficulty = forms.IntegerField(max_value=8, label='Сложность')
     link = forms.URLField(max_length=200, label='Ссылка')
-    solution = forms.CharField(widget=forms.Textarea, label="Что-то")
+    code = forms.CharField(widget=forms.Textarea, label="Что-то")
