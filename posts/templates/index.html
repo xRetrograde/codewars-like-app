@@ -8,7 +8,7 @@
     {% for post in posts %}
         <section>
             <p>{{ post.name }} - {{ post.author.name }} ({{ post.link }})</p>
-            <input type="button" value="Показать решение">
+            <input type="button" value="Показать решение" onclick="location.assign('/post/{{ post.id }}')">
             <hr>
         </section>
     {% endfor %}
