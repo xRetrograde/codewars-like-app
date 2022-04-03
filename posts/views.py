@@ -2,13 +2,15 @@ from django.contrib.auth.hashers import check_password
 from django.shortcuts import render, redirect, get_object_or_404
 from .forms import RegistrationForm, LoginForm, AddPost
 from .models import User, Post
+from .utils import auth_required, unauth_required
 
 
 def index(request):
-    context = {'posts': Post.objects.all()}
+    context = {'posts': Post.objects.order_by('-date')}
     return render(request, 'index.html', context)
 
 
+@auth_required
 def profile(request):
     context = {'username': request.session.get('name'),
                'posts': ['lambda x: x * 2', 'print("hello world")']}
@@ -16,14 +18,8 @@ def profile(request):
     return render(request, 'profile.html', context)
 
 
-def new_post(request):
-    return render(request, 'newpost.html', {'form': AddPost})
-
-
+@unauth_required
 def registration(request):
-    if request.session.get('email'):
-        return redirect('/profile')
-
     if request.method == 'POST':
 
         form = RegistrationForm(request.POST)
@@ -43,10 +39,8 @@ def registration(request):
     return render(request, 'registration.html', {'form': form})
 
 
+@unauth_required
 def login(request):
-    if request.session.get('email'):
-        return redirect('/profile')
-
     if request.method == 'POST':
         form = LoginForm(request.POST)
 
@@ -62,13 +56,13 @@ def login(request):
     return render(request, 'login.html', {'form': form})
 
 
+@auth_required
 def logout(request):
-    for key in ['name', 'email', 'password']:
-        del request.session[key]
-
+    request.session.clear()
     return redirect('/')
 
 
+@auth_required
 def add_post(request):
     if request.method == 'POST':
         form = AddPost(request.POST)
@@ -78,8 +72,8 @@ def add_post(request):
             new_form = form.save(commit=False)
             difficulty = form.cleaned_data.get('difficulty')
             link = form.cleaned_data.get('link')
-            solution = form.cleaned_data.get('solution')
-            new_form.set_fields(difficulty, link, solution, user)
+            code = form.cleaned_data.get('code')
+            new_form.set_fields(difficulty, link, code, user)
             new_form.save()
 
     form = AddPost()
