@@ -19,14 +19,15 @@ class Post(models.Model):
     difficulty = models.IntegerField(default=8)
     language = models.CharField('Язык', max_length=15)
     link = models.URLField(max_length=300)
-    author = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
-    solution = models.TextField(default='Ваше решение')
+    author = models.ForeignKey(User, on_delete=models.CASCADE)
+    code = models.TextField(default='Ваше решение')
+    date = models.DateTimeField('Дата публикации')
 
     def __str__(self):
-        return self.author
+        return self.name
 
     def set_fields(self, difficulty, link, solution, author):
         self.difficulty = difficulty
         self.link = link
-        self.solution = solution
+        self.code = solution
         self.author = author
