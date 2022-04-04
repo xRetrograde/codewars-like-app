@@ -2,7 +2,8 @@ from django.contrib.auth.hashers import check_password
 from django.shortcuts import render, redirect, get_object_or_404
 from .forms import RegistrationForm, LoginForm, AddPost
 from .models import User, Post
-from .utils import auth_required, unauth_required
+from .utils import auth_required, unauth_required, set_session_info
+from datetime import datetime
 
 
 def index(request):
@@ -27,10 +28,7 @@ def registration(request):
             new_user = form.save(commit=False)
             new_user.set_password(request.POST["password"])
             new_user.save()
-
-            request.session['name'] = form.cleaned_data.get('name')
-            request.session['email'] = form.cleaned_data.get('email')
-            request.session['password'] = form.cleaned_data.get('password')
+            set_session_info(request, form.cleaned_data.get('name'), form.cleaned_data.get('email'), form.cleaned_data.get('password'))
 
             return redirect('/profile')
 
@@ -47,9 +45,8 @@ def login(request):
         if form.is_valid():
             user = get_object_or_404(User, email=form.cleaned_data.get('email'))
             if check_password(request.POST["password"], user.password):
-                request.session['name'] = user.name
-                request.session['email'] = user.email
-                request.session['password'] = form.cleaned_data.get('password')
+                set_session_info(request, user.name, user.email, user.password)
+
                 return redirect('/profile')
 
     form = LoginForm()
@@ -69,12 +66,12 @@ def add_post(request):
         if form.is_valid():
             email = request.session['email']
             user = User.objects.get(email=email)
-            new_form = form.save(commit=False)
+            form_date = form.save(commit=False)
             difficulty = form.cleaned_data.get('difficulty')
             link = form.cleaned_data.get('link')
             code = form.cleaned_data.get('code')
-            new_form.set_fields(difficulty, link, code, user)
-            new_form.save()
+            form_date.set_fields(difficulty, link, code, user, datetime.now())
+            form_date.save()
 
     form = AddPost()
     return render(request, 'newpost.html', {'form': form})
