@@ -26,8 +26,9 @@ class Post(models.Model):
     def __str__(self):
         return self.name
 
-    def set_fields(self, difficulty, link, solution, author):
+    def set_fields(self, difficulty, link, solution, author, date):
         self.difficulty = difficulty
         self.link = link
         self.code = solution
         self.author = author
+        self.date = date
